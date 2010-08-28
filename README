@@ -1,0 +1,34 @@
+Simple lazy lists implementation for Erlang.
+
+Examples:
+
+ll:print(ll:filter(fun({X,Y}) -> Y rem X =:= 0 end,
+	ll:zip(ll:seq(1, 1000), ll:seq(10001, 11000)))).
+
+ll:foldl(fun(X, Acc) -> Acc + X end, 0, ll:seq(1, 100000)).
+
+ll:print(ll:first(14, ll:append(ll:seq(1, 10), ll:seq(151, 160)))).
+
+
+
+Parametrized module usage examples:
+
+begin
+    L = ll_wrap:new(ll:seq(1, 10)),
+    L2 = L:map(fun(X) -> 20*X end),
+    L2:print()
+end.
+
+begin
+    L = ll_wrap:new(ll:zip(ll:seq(1, 1000), ll:seq(10001, 11000))),
+    L2 = L:filter(fun({X,Y}) -> Y rem X =:= 0 end),
+    L2:print()
+end.
+
+begin
+	L1 = ll_wrap:new(ll:seq(1, 10)),
+	L2 = ll_wrap:new(ll:seq(151, 160)),
+	L3 = L1:append(L2),
+	L4 = L3:first(14),
+	L4:print()
+end.
